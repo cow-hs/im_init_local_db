@@ -1,35 +1,35 @@
 #!/bin/bash
 
-# MariaDB 리셋
+# Reset MariaDB
 if [ -d "mariadb" ]; then
   rm -rf mariadb/*
-  echo "MariaDB 데이터 디렉토리가 삭제되었습니다."
+  echo "The MariaDB data directory has been deleted."
 else
-  echo "MariaDB 데이터 디렉토리가 존재하지 않습니다."
+  echo "The MariaDB data directory does not exist."
 fi
 
-# MongoDB 리셋
+# Reset MongoDB
 if [ -d "mongodb" ]; then
   rm -rf mongodb/*
-  echo "MongoDB 데이터 디렉토리가 삭제되었습니다."
+  echo "The MongoDB data directory has been deleted."
 else
-  echo "MongoDB 데이터 디렉토리가 존재하지 않습니다."
+  echo "The MongoDB data directory does not exist."
 fi
 
-# Redis 리셋
+# Reset Redis
 if [ -d "redis" ]; then
   rm -rf redis/*
-  echo "Redis 데이터 디렉토리가 삭제되었습니다."
+  echo "The Redis data directory has been deleted."
 else
-  echo "Redis 데이터 디렉토리가 존재하지 않습니다."
+  echo "The Redis data directory does not exist."
 fi
 
 # docker-compose 중지 및 볼륨 삭제
 if [ -f "docker-compose.yml" ]; then
   docker-compose down -v
-  echo "Docker 컨테이너와 볼륨이 삭제되었습니다."
+  echo "The Docker containers and volumes have been deleted."
 else
-  echo "docker-compose.yml 파일이 존재하지 않습니다."
+  echo "The docker-compose.yml file does not exist."
 fi
 
-echo "데이터베이스 리셋 완료."
+echo "Database reset complete."

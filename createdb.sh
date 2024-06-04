@@ -1,27 +1,27 @@
 #!/bin/bash
 
-# mariadb 폴더 생성
+# Create mariadb folder
 if [ ! -d "mariadb" ]; then
   mkdir mariadb
-  echo "mariadb 폴더가 생성되었습니다."
+  echo "The mariadb folder has been created."
 else
-  echo "mariadb 폴더가 이미 존재합니다."
+  echo "The mariadb folder already exists."
 fi
 
-# mongodb 폴더 생성  
+# Create mongodb folder  
 if [ ! -d "mongodb" ]; then
   mkdir mongodb
-  echo "mongodb 폴더가 생성되었습니다."
+  echo "The mongodb folder has been created."
 else
-  echo "mongodb 폴더가 이미 존재합니다."
+  echo "The mongodb folder already exists."
 fi
 
-# redis 폴더 생성
+# Create redis folder
 if [ ! -d "redis" ]; then
   mkdir redis
-  echo "redis 폴더가 생성되었습니다."
+  echo "The redis folder has been created."
 else
-  echo "redis 폴더가 이미 존재합니다."
+  echo "The redis folder already exists."
 fi
 
-echo "데이터베이스 폴더 생성 완료."
+echo "Database folders creation complete."
