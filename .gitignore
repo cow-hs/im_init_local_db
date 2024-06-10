@@ -1,3 +1,4 @@
-mariadb/
-mongodb/
-redis/
+mariadb/data/
+mongodb/data/
+redis/data/
+sql

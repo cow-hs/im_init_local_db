@@ -24,4 +24,12 @@ else
   echo "The redis folder already exists."
 fi
 
+# Create sql folder
+if [ ! -d "sql" ]; then
+  mkdir sql
+  echo "The sql folder has been created."
+else
+  echo "The sql folder already exists."
+fi
+
 echo "Database folders creation complete."

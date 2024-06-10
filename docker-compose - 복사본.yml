@@ -12,6 +12,21 @@ services:
     ports:
       - 3306:3306
 
+  redis:
+    image: redis:5.0.14
+    volumes:
+      - ./redis/data:/data
+    ports:
+      - 6379:6379
+
+  mongodb:
+    image: mongo:7.0.7
+    volumes:
+      - ./mongodb/data:/data
+      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    ports:
+      - 27017:27017
+
   python:
     image: python:3.9
     container_name: python-script
