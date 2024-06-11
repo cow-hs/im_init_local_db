@@ -8,9 +8,27 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
     volumes:
       - ./mariadb/data:/var/lib/mysql
-      - ./sql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
+    command: [
+      --innodb-buffer-pool-size=16G,
+      --innodb-page-size=16K
+    ]
+
+  redis:
+    image: redis:5.0.14
+    volumes:
+      - ./redis/data:/data
+    ports:
+      - 6379:6379
+
+  mongodb:
+    image: mongo:7.0.7
+    volumes:
+      - ./mongodb/data:/data
+      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    ports:
+      - 27017:27017
 
   python:
     image: python:3.9

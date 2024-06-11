@@ -36,7 +36,7 @@ _password = "1234"
 _host = "mariadb"  # Docker 컨테이너의 서비스 이름으로 변경
 _port = 3306
 _workpath = str(os.path.dirname(os.path.abspath(__file__)))
-_resetUser = "0"
+_resetUser = "1"
 
 def createDataBase():
     path = f"/sql/_DataBase/**"  # Docker 내 마운트 경로로 변경
@@ -181,6 +181,7 @@ if __name__ == '__main__':
     os.system('chcp 65001')
     renderinfomation()
     wait_for_mariadb()  # MariaDB가 준비될 때까지 기다림
+    time.sleep(10)
     createDataBase()
     initializeMaria()
     print("##############")
