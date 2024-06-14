@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# docker-compose 중지 및 볼륨 삭제
+if [ -f "docker-compose.yml" ]; then
+  docker-compose down -v
+  echo "The Docker containers and volumes have been deleted."
+else
+  echo "The docker-compose.yml file does not exist."
+fi
+echo "Database reset complete."
+
 # Reset MariaDB
 if [ -d "mariadb" ]; then
   rm -rf mariadb/data/
@@ -24,12 +33,7 @@ else
   echo "The Redis data directory does not exist."
 fi
 
-# docker-compose 중지 및 볼륨 삭제
-if [ -f "docker-compose.yml" ]; then
-  docker-compose down -v
-  echo "The Docker containers and volumes have been deleted."
-else
-  echo "The docker-compose.yml file does not exist."
-fi
-
-echo "Database reset complete."
+ENV_FILE=".env"
+# Change the INIT_SQL value to false
+sed -i 's/INIT_SQL=.*/INIT_SQL=false/' $ENV_FILE
+echo "INIT_SQL value in $ENV_FILE has been changed to 'false'."

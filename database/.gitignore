@@ -1,4 +1,5 @@
 mariadb/data/
+mariadb/sql
 mongodb/data/
 redis/data/
-sql
+.env

@@ -11,7 +11,7 @@ services:
     ports:
       - 3306:3306
     command: [
-      --innodb-buffer-pool-size=16G,
+      --innodb-buffer-pool-size=8G,
       --innodb-page-size=16K
     ]
 
@@ -34,9 +34,12 @@ services:
     image: python:3.9
     container_name: python-script
     volumes:
-      - ./scripts:/scripts
-      - ./sql:/sql
-    working_dir: /scripts
+      - ./mariadb/scripts:/scripts
+      - ./mariadb/sql:/sql
+    working_dir: /mariadb/scripts
     depends_on:
       - mariadb
     command: ["python", "initsql.py"]
+    # Execute the script only if the INIT_SQL environment variable is 'true'
+    # Otherwise, do not execute the script
+    entrypoint: ["sh", "-c", "${INIT_SQL:-false} == 'true' && python initsql.py || echo 'INIT_SQL is false, skipping python script'"]

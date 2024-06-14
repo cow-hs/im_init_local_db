@@ -36,7 +36,6 @@ _password = "1234"
 _host = "mariadb"  # Docker 컨테이너의 서비스 이름으로 변경
 _port = 3306
 _workpath = str(os.path.dirname(os.path.abspath(__file__)))
-_resetUser = "1"
 
 def createDataBase():
     path = f"/sql/_DataBase/**"  # Docker 내 마운트 경로로 변경
@@ -75,15 +74,10 @@ def createDataBase():
 
 def initializeMaria():
     global _database
-    global _resetUser
 
-    if _resetUser == "1":
-        _database.clear()
-        _database = ["config", "game", "ironsecurity", "bill"]
-        print('reset user data!')
-    else:
-        _database.clear()
-        _database = ["config"]
+    _database.clear()
+    _database = ["config", "game", "ironsecurity", "bill"]
+    print('reset user data!')
 
     print('Argument : {}'.format(_database))
 
@@ -154,13 +148,11 @@ def renderinfomation():
         global _password
         global _host
         global _port
-        global _resetUser
 
         _user = argument[0]
         _password = argument[1]
         _host = argument[2]
         _port = argument[3]
-        _resetUser = argument[4]
 
         print('Argument : {}'.format(argument))
         print(" ----------- start argument ----------- ")
