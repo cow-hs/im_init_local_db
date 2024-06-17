@@ -2,4 +2,3 @@ mariadb/data/
 mariadb/sql
 mongodb/data/
 redis/data/
-.env

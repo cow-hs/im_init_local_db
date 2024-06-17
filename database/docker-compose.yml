@@ -14,6 +14,8 @@ services:
       --innodb-buffer-pool-size=8G,
       --innodb-page-size=16K
     ]
+    networks:
+      - dc-network
 
   redis:
     image: redis:5.0.14
@@ -21,6 +23,8 @@ services:
       - ./redis/data:/data
     ports:
       - 6379:6379
+    networks:
+      - dc-network
 
   mongodb:
     image: mongo:7.0.7
@@ -29,6 +33,8 @@ services:
       - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
     ports:
       - 27017:27017
+    networks:
+      - dc-network
 
   python:
     image: python:3.9
@@ -43,3 +49,8 @@ services:
     # Execute the script only if the INIT_SQL environment variable is 'true'
     # Otherwise, do not execute the script
     entrypoint: ["sh", "-c", "${INIT_SQL:-false} == 'true' && python initsql.py || echo 'INIT_SQL is false, skipping python script'"]
+
+networks:
+  dc-network:
+    driver: bridge
+    name: dc-network

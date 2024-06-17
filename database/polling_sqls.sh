@@ -2,7 +2,7 @@
 
 # Load the .env file
 set -a
-source .env
+source ../.env
 set +a
 
 SCRIPT_PATH="$ROOT_PATH/dungeon-crawler/DungeonCrawlerService/database"

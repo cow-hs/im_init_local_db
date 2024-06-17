@@ -1,0 +1,46 @@
+# version: '3.8'
+
+# services:
+#   service:
+#     container_name: ${NAME:-dc_master}
+#     build:
+#       context: .
+#       # dockerfile: Dockerfile
+#     image: ${NAME:-dc_master}:latest
+#     volumes:
+#       - ./jars:/app
+#       - ./logs:/logs
+#     environment:
+#       - JAVA_OPTS=${JAVA_OPTS:--Xmx512m -Xms256m -XX:+UseG1GC -Dfile.encoding=UTF-8}
+#       - LOG_FILE=/logs/${NAME:-dc_master}.log
+#     command: "java -jar ${JAR_PATH:-/app/app-master.jar} ${JAR_ARG1:--encoding UTF-8} > ${LOG_FILE} 2>&1"
+#     networks:
+#       - dc-network
+
+# networks:
+#   dc-network:
+#     external: true
+
+version: '3.8'
+
+services:
+  service:
+    container_name: dc_master
+    build:
+      context: .
+      # dockerfile: Dockerfile
+    image: dc_master:latest
+    volumes:
+      - ./jars:/app
+      - ./logs:/logs
+    environment:
+      - JAVA_OPTS=-Xmx512m -Xms256m -XX:+UseG1GC -Dfile.encoding=UTF-8
+      - LOG_FILE=/logs/dc_master.log
+      - REDIS_0_CONNECTION_IP=redis #코드수정없이 이걸 주입할 수 없음.. spring boot를 사용하던가, 환경변수도 읽도록 하던가 localhost로는 컨테이너끼리 통신 불가능
+    command: "java -jar /app/app-master.jar -encoding UTF-8 > ${LOG_FILE} 2>&1"
+    networks:
+      - dc-network
+
+networks:
+  dc-network:
+    external: true

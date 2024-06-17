@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  service:
+    container_name: "dc_gamelift"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./jars:/app
+      - ./logs:/logs
+    environment:
+      - JAVA_OPTS=${JAVA_OPTS:-"-Xmx512m -Xms256m -XX:+UseG1GC -Dfile.encoding=UTF-8"}
+      - LOG_FILE=/logs/dc_gamelift.log
+    command: ["java -jar /app/GameLiftLocal.jar -p 9080 > ${LOG_FILE} 2>&1"]
+    ports:
+      - ${SERVICE_PORT:-}
+    networks:
+      - dc-network
+
+networks:
+  dc-network:
+    driver: bridge
