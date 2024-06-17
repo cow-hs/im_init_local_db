@@ -42,14 +42,14 @@ services:
     volumes:
       - ./mariadb/scripts:/scripts
       - ./mariadb/sql:/sql
-    working_dir: /mariadb/scripts
+    working_dir: /scripts
     depends_on:
       - mariadb
-    command: ["python", "initsql.py"]
     # Execute the script only if the INIT_SQL environment variable is 'true'
     # Otherwise, do not execute the script
-    entrypoint: ["sh", "-c", "${INIT_SQL:-false} == 'true' && python initsql.py || echo 'INIT_SQL is false, skipping python script'"]
-
+    entrypoint: ["sh", "-c", "if [ \"${INIT_SQL:-false}\" = \"true\" ]; then python initsql.py; else echo 'INIT_SQL is false, skipping python script'; fi"]
+    networks:
+      - dc-network
 networks:
   dc-network:
     driver: bridge

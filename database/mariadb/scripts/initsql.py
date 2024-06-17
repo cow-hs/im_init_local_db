@@ -7,12 +7,14 @@ import re
 import subprocess
 import time
 
+# 인코딩 설정
+sys.stdout.reconfigure(encoding='utf-8')
+
 try:
     import mariadb
 except ModuleNotFoundError:
-    subprocess.check_call(["pip", "install", "mariadb"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "mariadb"])
     import mariadb  # 다시 임포트 시도
-
 
 # MariaDB가 준비될 때까지 기다림
 def wait_for_mariadb():
@@ -30,7 +32,7 @@ def wait_for_mariadb():
             print("Waiting for MariaDB to be ready...")
             time.sleep(2)
 
-_database = ["config"]
+_database = ["config", "game", "ironsecurity", "bill"]
 _user = "root"
 _password = "1234"
 _host = "mariadb"  # Docker 컨테이너의 서비스 이름으로 변경
@@ -38,8 +40,9 @@ _port = 3306
 _workpath = str(os.path.dirname(os.path.abspath(__file__)))
 
 def createDataBase():
-    path = f"/sql/_DataBase/**"  # Docker 내 마운트 경로로 변경
+    path = f"/sql/_DataBase/**"
     file_list = glob.glob(path, recursive=True)
+    print(file_list)
     file_list_sql = [file for file in file_list if file.endswith(".sql")]
 
     try:
@@ -73,16 +76,10 @@ def createDataBase():
         conn.close()
 
 def initializeMaria():
-    global _database
-
-    _database.clear()
-    _database = ["config", "game", "ironsecurity", "bill"]
-    print('reset user data!')
-
     print('Argument : {}'.format(_database))
 
     for database in _database:
-        path = f"/sql/{database}/**"  # Docker 내 마운트 경로로 변경
+        path = f"/sql/{database}/**"
         file_list = glob.glob(path, recursive=True)
         file_list_sql = [file for file in file_list if file.endswith(".sql")]
 
@@ -165,12 +162,10 @@ def renderinfomation():
     print("host : " + _host)
     print("port : ", _port)
     print("work path : " + _workpath)
-    print("reset user data : " + _resetUser)
     print("---------------------------------------")
     print("")
 
 if __name__ == '__main__':
-    os.system('chcp 65001')
     renderinfomation()
     wait_for_mariadb()  # MariaDB가 준비될 때까지 기다림
     time.sleep(10)
